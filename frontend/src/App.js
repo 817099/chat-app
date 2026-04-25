@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import "./App.css";
 
 // 🔥 UPDATED BACKEND URL
-const API_URL = "https://chat-backend.onrender.com";
+const API_URL = "https://chat-backend-83gz.onrender.com";
 const socket = io(API_URL);
 
 function App() {
