@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
 
-const socket = io("http://localhost:5000");
+// 🔥 UPDATED BACKEND URL
+const API_URL = "https://chat-backend.onrender.com";
+const socket = io(API_URL);
 
 function App() {
   const [sender, setSender] = useState("");
@@ -20,7 +22,7 @@ function App() {
 
   const login = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${API_URL}/api/auth/login`, {
         username,
         password,
       });
@@ -38,7 +40,7 @@ function App() {
 
   const signup = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", {
+      await axios.post(`${API_URL}/api/auth/signup`, {
         username,
         password,
       });
@@ -69,7 +71,7 @@ function App() {
     if (!sender || !receiver) return;
 
     const res = await axios.get(
-      `http://localhost:5000/api/messages/${sender}/${receiver}`
+      `${API_URL}/api/messages/${sender}/${receiver}`
     );
 
     setChat(res.data);
@@ -118,7 +120,6 @@ function App() {
   return (
     <div className="app">
       {!loggedIn ? (
-        // 🔥 IMPROVED LOGIN UI
         <div className="login-page">
           <div className="login-box">
             <h2>Welcome 👋</h2>
