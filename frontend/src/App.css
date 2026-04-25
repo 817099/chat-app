@@ -1,0 +1,154 @@
+.app {
+  display: flex;
+  height: 100vh;
+  font-family: Arial;
+}
+
+/* 🔥 NEW LOGIN PAGE DESIGN */
+.login-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #075e54, #25d366);
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-box h2 {
+  margin-bottom: 5px;
+}
+
+.login-box p {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 15px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.login-btn {
+  flex: 1;
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.signup-btn {
+  flex: 1;
+  background: #075e54;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #20bd5a;
+}
+
+.signup-btn:hover {
+  background: #054c44;
+}
+
+/* OLD LOGIN (can stay but not used now) */
+.login {
+  margin: auto;
+  text-align: center;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 25%;
+  background: #075e54;
+  color: white;
+  padding: 10px;
+}
+
+.sidebar p {
+  background: #128c7e;
+  padding: 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* CHAT */
+.chat-container {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  background: #ece5dd;
+}
+
+.chat-header {
+  background: #075e54;
+  color: white;
+  padding: 10px;
+}
+
+/* MESSAGES */
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  background: white;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.message.own {
+  background: #dcf8c6;
+  margin-left: auto;
+}
+
+/* INPUT */
+.chat-input {
+  display: flex;
+  padding: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+.chat-input button {
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  background: #25d366;
+  color: white;
+  border: none;
+}
