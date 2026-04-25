@@ -77,6 +77,7 @@ function App() {
     setChat(res.data);
   };
 
+  // ✅ FIXED dependencies
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setChat((prev) => [...prev, data]);
@@ -103,19 +104,21 @@ function App() {
       socket.off("typing");
       socket.off("seen_update");
     };
-  }, [receiver]);
+  }, [receiver, loadMessages]); // ✅ added loadMessages
 
+  // ✅ FIXED dependencies
   useEffect(() => {
     if (loggedIn && receiver) {
       loadMessages();
     }
-  }, [receiver, loggedIn]);
+  }, [receiver, loggedIn, loadMessages]); // ✅ added loadMessages
 
+  // ✅ FIXED dependencies
   useEffect(() => {
     if (receiver) {
       socket.emit("seen", { sender, receiver });
     }
-  }, [chat]);
+  }, [chat, receiver, sender]); // ✅ added receiver, sender
 
   return (
     <div className="app">
