@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react"; // ✅ added useCallback
 import { io } from "socket.io-client";
 import "./App.css";
 
@@ -67,7 +67,8 @@ function App() {
     setMessage("");
   };
 
-  const loadMessages = async () => {
+  // ✅ FIXED using useCallback
+  const loadMessages = useCallback(async () => {
     if (!sender || !receiver) return;
 
     const res = await axios.get(
@@ -75,9 +76,8 @@ function App() {
     );
 
     setChat(res.data);
-  };
+  }, [sender, receiver]);
 
-  // ✅ FIXED dependencies
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setChat((prev) => [...prev, data]);
@@ -104,21 +104,19 @@ function App() {
       socket.off("typing");
       socket.off("seen_update");
     };
-  }, [receiver, loadMessages]); // ✅ added loadMessages
+  }, [receiver, loadMessages]);
 
-  // ✅ FIXED dependencies
   useEffect(() => {
     if (loggedIn && receiver) {
       loadMessages();
     }
-  }, [receiver, loggedIn, loadMessages]); // ✅ added loadMessages
+  }, [receiver, loggedIn, loadMessages]);
 
-  // ✅ FIXED dependencies
   useEffect(() => {
     if (receiver) {
       socket.emit("seen", { sender, receiver });
     }
-  }, [chat, receiver, sender]); // ✅ added receiver, sender
+  }, [chat, receiver, sender]);
 
   return (
     <div className="app">
