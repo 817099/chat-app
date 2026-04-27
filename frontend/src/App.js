@@ -23,13 +23,23 @@ function App() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  // 🔥 Upload image
+  // ✅ FIXED uploadImage function
   const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const res = await axios.post(`${API_URL}/api/upload`, formData);
-    return res.data.url;
+      const res = await axios.post(`${API_URL}/api/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return res.data.url; // ✅ important
+    } catch (err) {
+      console.log("Upload error:", err);
+      return null;
+    }
   };
 
   const login = async () => {
@@ -82,7 +92,7 @@ function App() {
 
     setMessage("");
     setImage(null);
-    setPreview(null); // 🔥 clear preview
+    setPreview(null);
   };
 
   const loadMessages = useCallback(async () => {
@@ -255,7 +265,6 @@ function App() {
                 }}
               />
 
-              {/* 🔥 FILE INPUT WITH PREVIEW */}
               <input
                 type="file"
                 onChange={(e) => {
