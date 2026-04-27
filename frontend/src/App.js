@@ -19,10 +19,11 @@ function App() {
 
   const [typingUser, setTypingUser] = useState("");
 
-  // 🔥 NEW: image state
+  // 🔥 Image states
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  // 🔥 Upload image to backend
+  // 🔥 Upload image
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -59,7 +60,7 @@ function App() {
     }
   };
 
-  // 🔥 UPDATED sendMessage
+  // 🔥 Send message (with image)
   const sendMessage = async () => {
     if (!receiver) {
       alert("Select a user");
@@ -76,11 +77,12 @@ function App() {
       sender,
       receiver,
       message,
-      image: imageUrl, // 🔥 NEW
+      image: imageUrl,
     });
 
     setMessage("");
     setImage(null);
+    setPreview(null); // 🔥 clear preview
   };
 
   const loadMessages = useCallback(async () => {
@@ -195,7 +197,6 @@ function App() {
                     <div className="msg-text">
                       {msg.message}
 
-                      {/* 🔥 SHOW IMAGE */}
                       {msg.image && (
                         <img
                           src={msg.image}
@@ -227,7 +228,23 @@ function App() {
               })}
             </div>
 
-            {/* 🔥 INPUT AREA */}
+            {/* 🔥 IMAGE PREVIEW */}
+            {preview && (
+              <div className="image-preview">
+                <img src={preview} alt="preview" />
+
+                <button
+                  onClick={() => {
+                    setImage(null);
+                    setPreview(null);
+                  }}
+                >
+                  ❌
+                </button>
+              </div>
+            )}
+
+            {/* INPUT AREA */}
             <div className="chat-input">
               <input
                 placeholder="Type a message"
@@ -238,10 +255,17 @@ function App() {
                 }}
               />
 
-              {/* 🔥 FILE INPUT */}
+              {/* 🔥 FILE INPUT WITH PREVIEW */}
               <input
                 type="file"
-                onChange={(e) => setImage(e.target.files[0])}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  setImage(file);
+
+                  if (file) {
+                    setPreview(URL.createObjectURL(file));
+                  }
+                }}
               />
 
               <button onClick={sendMessage}>➤</button>
