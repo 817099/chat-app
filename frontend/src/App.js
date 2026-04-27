@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react"; // ✅ added useCallback
+import React, { useState, useEffect, useCallback } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
 
-// 🔥 UPDATED BACKEND URL
 const API_URL = "https://chat-backend-83gz.onrender.com";
 const socket = io(API_URL);
 
@@ -28,12 +27,10 @@ function App() {
       });
 
       localStorage.setItem("token", res.data.token);
-
       setSender(res.data.username);
       socket.emit("register", res.data.username);
-
       setLoggedIn(true);
-    } catch (err) {
+    } catch {
       alert("Login failed");
     }
   };
@@ -44,30 +41,27 @@ function App() {
         username,
         password,
       });
-
       alert("Signup successful");
-    } catch (err) {
+    } catch {
       alert("Signup failed");
     }
   };
 
   const sendMessage = () => {
     if (!receiver) {
-      alert("Enter receiver name");
+      alert("Select a user");
       return;
     }
 
-    const data = {
+    socket.emit("send_message", {
       sender,
-      receiver: receiver.trim().toLowerCase(),
+      receiver,
       message,
-    };
+    });
 
-    socket.emit("send_message", data);
     setMessage("");
   };
 
-  // ✅ FIXED using useCallback
   const loadMessages = useCallback(async () => {
     if (!sender || !receiver) return;
 
@@ -83,9 +77,7 @@ function App() {
       setChat((prev) => [...prev, data]);
     });
 
-    socket.on("online_users", (users) => {
-      setOnlineUsers(users);
-    });
+    socket.on("online_users", setOnlineUsers);
 
     socket.on("typing", (data) => {
       if (data.sender === receiver) {
@@ -94,9 +86,7 @@ function App() {
       }
     });
 
-    socket.on("seen_update", () => {
-      loadMessages();
-    });
+    socket.on("seen_update", loadMessages);
 
     return () => {
       socket.off("receive_message");
@@ -107,24 +97,20 @@ function App() {
   }, [receiver, loadMessages]);
 
   useEffect(() => {
-    if (loggedIn && receiver) {
-      loadMessages();
-    }
+    if (loggedIn && receiver) loadMessages();
   }, [receiver, loggedIn, loadMessages]);
 
   useEffect(() => {
-    if (receiver) {
-      socket.emit("seen", { sender, receiver });
-    }
+    if (receiver) socket.emit("seen", { sender, receiver });
   }, [chat, receiver, sender]);
 
   return (
     <div className="app">
       {!loggedIn ? (
+        /* 🔐 LOGIN UI */
         <div className="login-page">
           <div className="login-box">
-            <h2>Welcome 👋</h2>
-            <p>Login to start chatting</p>
+            <h2>WhatsApp Clone 💬</h2>
 
             <input
               placeholder="Username"
@@ -139,31 +125,35 @@ function App() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <div className="login-buttons">
-              <button className="login-btn" onClick={login}>
-                Login
-              </button>
-              <button className="signup-btn" onClick={signup}>
-                Signup
-              </button>
-            </div>
+            <button onClick={login}>Login</button>
+            <button onClick={signup}>Signup</button>
           </div>
         </div>
       ) : (
         <>
+          {/* 🔥 SIDEBAR */}
           <div className="sidebar">
-            <h3>Online Users</h3>
+            <div className="sidebar-header">Chats</div>
+
             {onlineUsers.map((user, i) => (
-              <p key={i} onClick={() => setReceiver(user)}>
-                {user}
-              </p>
+              <div
+                key={i}
+                className="user-item"
+                onClick={() => setReceiver(user)}
+              >
+                <div className="avatar">
+                  {user[0].toUpperCase()}
+                </div>
+                <span>{user}</span>
+              </div>
             ))}
           </div>
 
+          {/* 🔥 CHAT AREA */}
           <div className="chat-container">
             <div className="chat-header">
-              <h3>{receiver || "Select a user"}</h3>
-              {typingUser && <p>{typingUser} is typing...</p>}
+              <strong>{receiver || "Select a user"}</strong>
+              {typingUser && <span> typing...</span>}
             </div>
 
             <div className="chat-messages">
@@ -171,19 +161,20 @@ function App() {
                 <div
                   key={i}
                   className={
-                    msg.sender === sender ? "message own" : "message"
+                    msg.sender === sender
+                      ? "message own"
+                      : "message"
                   }
                 >
-                  <p>
-                    {msg.message}{" "}
-                    {msg.sender === sender && (
-                      <span>
-                        {msg.status === "sent" && "✔"}
-                        {msg.status === "delivered" && "✔✔"}
-                        {msg.status === "seen" && "✔✔ (seen)"}
-                      </span>
-                    )}
-                  </p>
+                  {msg.message}
+
+                  {msg.sender === sender && (
+                    <span className="status">
+                      {msg.status === "sent" && "✔"}
+                      {msg.status === "delivered" && "✔✔"}
+                      {msg.status === "seen" && "✔✔✓"}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -197,7 +188,7 @@ function App() {
                   socket.emit("typing", { sender, receiver });
                 }}
               />
-              <button onClick={sendMessage}>Send</button>
+              <button onClick={sendMessage}>➤</button>
             </div>
           </div>
         </>

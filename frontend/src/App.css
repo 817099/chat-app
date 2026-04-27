@@ -1,10 +1,10 @@
 .app {
   display: flex;
   height: 100vh;
-  font-family: Arial;
+  font-family: "Segoe UI", Arial;
 }
 
-/* 🔥 NEW LOGIN PAGE DESIGN */
+/* 🔥 LOGIN PAGE */
 .login-page {
   height: 100vh;
   width: 100%;
@@ -75,66 +75,99 @@
   background: #054c44;
 }
 
-/* OLD LOGIN (can stay but not used now) */
-.login {
-  margin: auto;
-  text-align: center;
-}
-
-/* SIDEBAR */
+/* 🔥 SIDEBAR (Improved) */
 .sidebar {
-  width: 25%;
-  background: #075e54;
+  width: 30%;
+  background: #111b21;
   color: white;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar p {
-  background: #128c7e;
-  padding: 8px;
-  margin: 5px 0;
+.sidebar-header {
+  padding: 15px;
+  background: #202c33;
+  font-size: 18px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
   cursor: pointer;
-  border-radius: 5px;
+  border-bottom: 1px solid #2a3942;
 }
 
-/* CHAT */
+.user-item:hover {
+  background: #2a3942;
+}
+
+/* 🔥 Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #00a884;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* 🔥 CHAT AREA */
 .chat-container {
-  width: 75%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   background: #ece5dd;
 }
 
+/* 🔥 HEADER */
 .chat-header {
-  background: #075e54;
+  background: #202c33;
   color: white;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* MESSAGES */
+/* 🔥 MESSAGES */
 .chat-messages {
   flex: 1;
-  padding: 10px;
+  padding: 15px;
   overflow-y: auto;
 }
 
+/* 🔥 Chat bubble */
 .message {
   background: white;
-  padding: 8px;
-  margin: 5px;
+  padding: 10px;
+  margin: 8px;
   border-radius: 10px;
   max-width: 60%;
+  position: relative;
 }
 
+/* 🔥 Own message */
 .message.own {
   background: #dcf8c6;
   margin-left: auto;
 }
 
-/* INPUT */
+/* 🔥 Status ticks */
+.status {
+  font-size: 12px;
+  margin-left: 8px;
+  color: gray;
+}
+
+/* 🔥 INPUT AREA */
 .chat-input {
   display: flex;
   padding: 10px;
+  background: #202c33;
 }
 
 .chat-input input {
@@ -146,9 +179,21 @@
 
 .chat-input button {
   margin-left: 10px;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 10px 15px;
+  border-radius: 50%;
   background: #25d366;
   color: white;
   border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* 🔥 Scrollbar styling (optional nice touch) */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
 }
