@@ -19,6 +19,18 @@ function App() {
 
   const [typingUser, setTypingUser] = useState("");
 
+  // 🔥 NEW: image state
+  const [image, setImage] = useState(null);
+
+  // 🔥 Upload image to backend
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await axios.post(`${API_URL}/api/upload`, formData);
+    return res.data.url;
+  };
+
   const login = async () => {
     try {
       const res = await axios.post(`${API_URL}/api/auth/login`, {
@@ -47,19 +59,28 @@ function App() {
     }
   };
 
-  const sendMessage = () => {
+  // 🔥 UPDATED sendMessage
+  const sendMessage = async () => {
     if (!receiver) {
       alert("Select a user");
       return;
+    }
+
+    let imageUrl = null;
+
+    if (image) {
+      imageUrl = await uploadImage(image);
     }
 
     socket.emit("send_message", {
       sender,
       receiver,
       message,
+      image: imageUrl, // 🔥 NEW
     });
 
     setMessage("");
+    setImage(null);
   };
 
   const loadMessages = useCallback(async () => {
@@ -171,7 +192,18 @@ function App() {
                         : "message"
                     }
                   >
-                    <div className="msg-text">{msg.message}</div>
+                    <div className="msg-text">
+                      {msg.message}
+
+                      {/* 🔥 SHOW IMAGE */}
+                      {msg.image && (
+                        <img
+                          src={msg.image}
+                          alt="chat"
+                          className="chat-img"
+                        />
+                      )}
+                    </div>
 
                     <div className="msg-meta">
                       <span className="time">{time}</span>
@@ -195,6 +227,7 @@ function App() {
               })}
             </div>
 
+            {/* 🔥 INPUT AREA */}
             <div className="chat-input">
               <input
                 placeholder="Type a message"
@@ -204,6 +237,13 @@ function App() {
                   socket.emit("typing", { sender, receiver });
                 }}
               />
+
+              {/* 🔥 FILE INPUT */}
+              <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+
               <button onClick={sendMessage}>➤</button>
             </div>
           </div>
