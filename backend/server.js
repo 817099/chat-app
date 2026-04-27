@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-// ✅ IMPORTANT: use dynamic port (Render fix)
+// ✅ IMPORTANT: dynamic port
 const PORT = process.env.PORT || 5000;
 
 // 🔥 Socket.IO setup
@@ -28,7 +28,7 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-// 🔥 ROUTES (keep BEFORE socket + listen)
+// ================= ROUTES =================
 
 // ✅ auth route
 const authRoutes = require("./routes/auth");
@@ -38,12 +38,17 @@ app.use("/api/auth", authRoutes);
 const messageRoutes = require("./routes/messages");
 app.use("/api/messages", messageRoutes);
 
+// 🔥 IMPORTANT: upload route (FIX)
+const uploadRoute = require("./routes/upload");
+app.use("/api/upload", uploadRoute);
+
 // test route
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-// models
+// ================= SOCKET =================
+
 const Message = require("./models/Message");
 
 // store online users
@@ -52,11 +57,13 @@ let users = {};
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
+  // register user
   socket.on("register", (username) => {
     users[username] = socket.id;
     io.emit("online_users", Object.keys(users));
   });
 
+  // typing event
   socket.on("typing", ({ sender, receiver }) => {
     const receiverSocketId = users[receiver];
     if (receiverSocketId) {
@@ -64,15 +71,16 @@ io.on("connection", (socket) => {
     }
   });
 
+  // send message
   socket.on("send_message", async (data) => {
     try {
-      const { sender, receiver, message, image} = data;
+      const { sender, receiver, message, image } = data;
 
       const newMessage = new Message({
         sender,
         receiver,
         message,
-        image,
+        image, // 🔥 image stored
         status: "sent",
       });
 
@@ -80,6 +88,7 @@ io.on("connection", (socket) => {
 
       const receiverSocketId = users[receiver];
 
+      // delivered
       if (receiverSocketId) {
         newMessage.status = "delivered";
         await newMessage.save();
@@ -87,12 +96,14 @@ io.on("connection", (socket) => {
         io.to(receiverSocketId).emit("receive_message", newMessage);
       }
 
+      // send back to sender
       socket.emit("receive_message", newMessage);
     } catch (error) {
       console.log("Error saving message:", error);
     }
   });
 
+  // seen
   socket.on("seen", async ({ sender, receiver }) => {
     await Message.updateMany(
       { sender: receiver, receiver: sender },
@@ -105,6 +116,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // disconnect
   socket.on("disconnect", () => {
     for (let user in users) {
       if (users[user] === socket.id) {
@@ -113,10 +125,12 @@ io.on("connection", (socket) => {
     }
 
     io.emit("online_users", Object.keys(users));
+    console.log("User disconnected");
   });
 });
 
-// ✅ start server
+// ================= START SERVER =================
+
 server.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
