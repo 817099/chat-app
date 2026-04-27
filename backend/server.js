@@ -66,12 +66,13 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", async (data) => {
     try {
-      const { sender, receiver, message } = data;
+      const { sender, receiver, message, image} = data;
 
       const newMessage = new Message({
         sender,
         receiver,
         message,
+        image,
         status: "sent",
       });
 

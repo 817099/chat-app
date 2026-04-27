@@ -4,6 +4,7 @@ const messageSchema = new mongoose.Schema({
   sender: String,
   receiver: String,
   message: String,
+  image: String,
 
   // 🔥 ADDED FIELD
   status: {
