@@ -107,7 +107,6 @@ function App() {
   return (
     <div className="app">
       {!loggedIn ? (
-        /* 🔐 LOGIN UI */
         <div className="login-page">
           <div className="login-box">
             <h2>WhatsApp Clone 💬</h2>
@@ -131,7 +130,7 @@ function App() {
         </div>
       ) : (
         <>
-          {/* 🔥 SIDEBAR */}
+          {/* SIDEBAR */}
           <div className="sidebar">
             <div className="sidebar-header">Chats</div>
 
@@ -149,7 +148,7 @@ function App() {
             ))}
           </div>
 
-          {/* 🔥 CHAT AREA */}
+          {/* CHAT AREA */}
           <div className="chat-container">
             <div className="chat-header">
               <strong>{receiver || "Select a user"}</strong>
@@ -157,26 +156,43 @@ function App() {
             </div>
 
             <div className="chat-messages">
-              {chat.map((msg, i) => (
-                <div
-                  key={i}
-                  className={
-                    msg.sender === sender
-                      ? "message own"
-                      : "message"
-                  }
-                >
-                  {msg.message}
+              {chat.map((msg, i) => {
+                const time = new Date(msg.createdAt).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
 
-                  {msg.sender === sender && (
-                    <span className="status">
-                      {msg.status === "sent" && "✔"}
-                      {msg.status === "delivered" && "✔✔"}
-                      {msg.status === "seen" && "✔✔✓"}
-                    </span>
-                  )}
-                </div>
-              ))}
+                return (
+                  <div
+                    key={i}
+                    className={
+                      msg.sender === sender
+                        ? "message own"
+                        : "message"
+                    }
+                  >
+                    <div className="msg-text">{msg.message}</div>
+
+                    <div className="msg-meta">
+                      <span className="time">{time}</span>
+
+                      {msg.sender === sender && (
+                        <span
+                          className={
+                            msg.status === "seen"
+                              ? "tick seen"
+                              : "tick"
+                          }
+                        >
+                          {msg.status === "sent" && "✔"}
+                          {msg.status === "delivered" && "✔✔"}
+                          {msg.status === "seen" && "✔✔"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="chat-input">
