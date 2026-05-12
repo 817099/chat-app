@@ -9,7 +9,7 @@
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   overflow: hidden;
-  background: #111b21;
+  background: #0b141a;
 }
 
 .app {
@@ -24,7 +24,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background: linear-gradient(135deg, #014d40, #0b7a61);
+  background: #0b141a;
 }
 
 /* ================= LEFT SIDE ================= */
@@ -34,25 +34,21 @@ body {
 
   position: relative;
 
-  background:
-    linear-gradient(
-      rgba(0, 77, 64, 0.78),
-      rgba(0, 77, 64, 0.78)
-    );
-
-  background-size: cover;
-  background-position: center;
+  background-size: cover !important;
+  background-position: center !important;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding: 60px;
+  padding: 40px;
 
   color: white;
+
+  overflow: hidden;
 }
 
-/* BACKGROUND EFFECT */
+/* DARK OVERLAY */
 
 .login-left::before {
   content: "";
@@ -60,14 +56,13 @@ body {
   position: absolute;
   inset: 0;
 
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 2px, transparent 2px),
-    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.06) 2px, transparent 2px),
-    radial-gradient(circle at 50% 70%, rgba(255,255,255,0.08) 2px, transparent 2px);
+  background:
+    linear-gradient(
+      rgba(0, 40, 30, 0.78),
+      rgba(0, 40, 30, 0.82)
+    );
 
-  background-size: 120px 120px;
-
-  opacity: 0.5;
+  z-index: 1;
 }
 
 /* CONTENT */
@@ -76,8 +71,12 @@ body {
   position: relative;
   z-index: 2;
 
-  max-width: 520px;
+  max-width: 450px;
+
+  padding-left: 40px;
 }
+
+/* LOGO */
 
 .logo-circle {
   width: 130px;
@@ -101,8 +100,10 @@ body {
     0 10px 35px rgba(0,0,0,0.25);
 }
 
+/* TITLE */
+
 .welcome-content h1 {
-  font-size: 76px;
+  font-size: 72px;
   line-height: 1.1;
 
   margin-bottom: 15px;
@@ -113,6 +114,8 @@ body {
 .welcome-content h1 span {
   color: #5cff8d;
 }
+
+/* GREEN LINE */
 
 .green-line {
   width: 120px;
@@ -125,9 +128,11 @@ body {
   margin: 25px 0 30px;
 }
 
+/* SUBTEXT */
+
 .welcome-content p {
-  font-size: 28px;
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 1.6;
 
   color: #d6f5e3;
 }
@@ -141,20 +146,24 @@ body {
   justify-content: center;
   align-items: center;
 
-  padding: 40px;
+  padding: 30px;
+
+  background: #075e54;
 }
 
 /* ================= LOGIN CARD ================= */
 
 .login-box {
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
 
-  background: rgba(255,255,255,0.97);
+  background: rgba(255,255,255,0.98);
 
   border-radius: 30px;
 
-  padding: 55px;
+  padding: 45px;
+
+  overflow: hidden;
 
   box-shadow:
     0 20px 60px rgba(0,0,0,0.25);
@@ -170,11 +179,12 @@ body {
 
   border-radius: 50%;
 
-  background: linear-gradient(
-    135deg,
-    #25d366,
-    #0ea85c
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #25d366,
+      #0ea85c
+    );
 
   display: flex;
   justify-content: center;
@@ -195,12 +205,12 @@ body {
 .login-box h2 {
   text-align: center;
 
-  font-size: 62px;
+  font-size: 64px;
   font-weight: 800;
 
   color: #014d40;
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .login-subtitle {
@@ -208,9 +218,9 @@ body {
 
   color: #667781;
 
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 
-  font-size: 20px;
+  font-size: 18px;
 }
 
 /* ================= LABEL ================= */
@@ -255,17 +265,23 @@ body {
     0 0 8px rgba(37,211,102,0.2);
 }
 
+/* INPUT ICON */
+
 .input-icon {
   font-size: 22px;
 
   margin-right: 12px;
 }
 
+/* EYE ICON */
+
 .eye-icon {
   font-size: 22px;
 
   cursor: pointer;
 }
+
+/* INPUT */
 
 .input-box input {
   flex: 1;
@@ -444,6 +460,8 @@ body {
   background: #f5f6f6;
 }
 
+/* AVATAR */
+
 .avatar {
   width: 45px;
   height: 45px;
@@ -463,6 +481,8 @@ body {
   margin-right: 12px;
 }
 
+/* CHAT */
+
 .chat-container {
   width: 70%;
   height: 100vh;
@@ -472,6 +492,8 @@ body {
 
   background: #efeae2;
 }
+
+/* CHAT HEADER */
 
 .chat-header {
   background: #f0f2f5;
@@ -483,6 +505,8 @@ body {
 
   border-bottom: 1px solid #ddd;
 }
+
+/* MESSAGES */
 
 .chat-messages {
   flex: 1;
@@ -524,6 +548,8 @@ body {
 .msg-text {
   word-wrap: break-word;
 }
+
+/* META */
 
 .msg-meta {
   display: flex;
