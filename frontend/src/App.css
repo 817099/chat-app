@@ -202,6 +202,8 @@
   background: white;
 
   transition: 0.3s;
+
+  box-sizing: border-box;
 }
 
 .input-box:focus-within {
@@ -210,7 +212,7 @@
 }
 
 .input-box input {
-  flex: 1;
+  width: 100%;
 
   border: none;
   outline: none;
@@ -220,6 +222,16 @@
   font-size: 18px;
 
   background: transparent;
+
+  box-sizing: border-box;
+}
+
+/* FIX INPUT ALIGNMENT */
+.login-box input {
+  width: 100% !important;
+  display: block !important;
+
+  box-sizing: border-box !important;
 }
 
 /* OPTIONS */
