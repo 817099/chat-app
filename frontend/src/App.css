@@ -34,8 +34,16 @@ body {
 
   position: relative;
 
+  background:
+    linear-gradient(
+      rgba(0, 40, 30, 0.78),
+      rgba(0, 40, 30, 0.82)
+    ),
+    url("./assets/login-bg.png");
+
   background-size: cover !important;
   background-position: center !important;
+  background-repeat: no-repeat;
 
   display: flex;
   justify-content: center;
@@ -46,23 +54,6 @@ body {
   color: white;
 
   overflow: hidden;
-}
-
-/* DARK OVERLAY */
-
-.login-left::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      rgba(0, 40, 30, 0.78),
-      rgba(0, 40, 30, 0.82)
-    );
-
-  z-index: 1;
 }
 
 /* CONTENT */

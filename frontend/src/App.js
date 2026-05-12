@@ -1,4 +1,3 @@
-import loginBg from "./assets/login-bg.png";
 import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { io } from "socket.io-client";
@@ -207,15 +206,7 @@ function App() {
         <div className="login-page">
 
           {/* LEFT SIDE */}
-          <div
-            className="login-left"
-            style={{
-              backgroundImage: `linear-gradient(
-                rgba(0,0,0,0.45),
-                rgba(0,0,0,0.45)
-              ), url(${loginBg})`
-            }}
-          >
+          <div className="login-left">
 
             <div className="welcome-content">
 
