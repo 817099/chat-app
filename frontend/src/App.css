@@ -1,181 +1,82 @@
-/* ================= GLOBAL ================= */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  overflow: hidden;
-  background: #0b141a;
-}
-
-.app {
-  width: 100%;
-  height: 100vh;
-}
-
 /* ================= LOGIN PAGE ================= */
 
 .login-page {
-  display: flex;
-  height: 100vh;
   width: 100%;
-  overflow: hidden;
-  background: #0b141a;
-}
-
-/* ================= LEFT SIDE ================= */
-
-.login-left {
-  flex: 1;
-
-  position: relative;
-
-  background:
-    linear-gradient(
-      rgba(0, 40, 30, 0.78),
-      rgba(0, 40, 30, 0.82)
-    ),
-    url("./assets/login-bg.png");
-
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat;
+  height: 100vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding: 40px;
+  background: #e5ddd5;
 
-  color: white;
-
-  overflow: hidden;
+  position: relative;
 }
 
-/* CONTENT */
+/* TOP GREEN BAR */
 
-.welcome-content {
+.login-page::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 220px;
+
+  background: #00a884;
+
+  z-index: 1;
+}
+
+/* REMOVE OLD LEFT SIDE */
+
+.login-left {
+  display: none;
+}
+
+/* CENTER LOGIN AREA */
+
+.login-right {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   position: relative;
   z-index: 2;
 
-  max-width: 450px;
-
-  padding-left: 40px;
+  padding: 20px;
 }
 
-/* LOGO */
-
-.logo-circle {
-  width: 130px;
-  height: 130px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: #25d366;
-
-  font-size: 60px;
-
-  margin-bottom: 35px;
-
-  box-shadow:
-    0 10px 35px rgba(0,0,0,0.25);
-}
-
-/* TITLE */
-
-.welcome-content h1 {
-  font-size: 72px;
-  line-height: 1.1;
-
-  margin-bottom: 15px;
-
-  font-weight: 800;
-}
-
-.welcome-content h1 span {
-  color: #5cff8d;
-}
-
-/* GREEN LINE */
-
-.green-line {
-  width: 120px;
-  height: 6px;
-
-  background: #5cff8d;
-
-  border-radius: 10px;
-
-  margin: 25px 0 30px;
-}
-
-/* SUBTEXT */
-
-.welcome-content p {
-  font-size: 20px;
-  line-height: 1.6;
-
-  color: #d6f5e3;
-}
-
-/* ================= RIGHT SIDE ================= */
-
-.login-right {
-  width: 45%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 30px;
-
-  background: #075e54;
-}
-
-/* ================= LOGIN CARD ================= */
+/* LOGIN CARD */
 
 .login-box {
   width: 100%;
-  max-width: 500px;
+  max-width: 420px;
 
-  background: rgba(255,255,255,0.98);
+  background: white;
 
-  border-radius: 30px;
+  border-radius: 14px;
 
   padding: 45px;
 
-  overflow: hidden;
-
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.25);
+    0 2px 10px rgba(0,0,0,0.08);
 
-  backdrop-filter: blur(10px);
+  overflow: hidden;
 }
 
-/* ================= TOP ICON ================= */
+/* WHATSAPP LOGO */
 
 .login-top-icon {
-  width: 95px;
-  height: 95px;
+  width: 90px;
+  height: 90px;
 
   border-radius: 50%;
 
-  background:
-    linear-gradient(
-      135deg,
-      #25d366,
-      #0ea85c
-    );
+  background: #25d366;
 
   display: flex;
   justify-content: center;
@@ -186,90 +87,78 @@ body {
 
   font-size: 42px;
   color: white;
-
-  box-shadow:
-    0 10px 25px rgba(37,211,102,0.3);
 }
 
-/* ================= TITLE ================= */
+/* TITLE */
 
 .login-box h2 {
   text-align: center;
 
-  font-size: 64px;
-  font-weight: 800;
+  font-size: 42px;
+  font-weight: 700;
 
-  color: #014d40;
+  color: #111b21;
 
   margin-bottom: 10px;
 }
+
+/* SUBTITLE */
 
 .login-subtitle {
   text-align: center;
 
   color: #667781;
 
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 
-  font-size: 18px;
+  font-size: 16px;
 }
 
-/* ================= LABEL ================= */
+/* LABEL */
 
 .login-label {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 
   margin-bottom: 10px;
 
   display: block;
 
-  color: #111;
+  color: #111b21;
 }
 
-/* ================= INPUT BOX ================= */
+/* INPUT BOX */
 
 .input-box {
   width: 100%;
-  height: 65px;
+  height: 58px;
 
   display: flex;
   align-items: center;
 
-  border: 2px solid #dfe5e7;
+  border: 1px solid #d1d7db;
 
-  border-radius: 16px;
+  border-radius: 10px;
 
-  padding: 0 20px;
+  padding: 0 16px;
 
-  margin-bottom: 25px;
+  margin-bottom: 22px;
 
   background: white;
 
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 .input-box:focus-within {
-  border-color: #25d366;
-
-  box-shadow:
-    0 0 8px rgba(37,211,102,0.2);
+  border-color: #00a884;
 }
 
 /* INPUT ICON */
 
 .input-icon {
-  font-size: 22px;
+  font-size: 20px;
 
   margin-right: 12px;
-}
-
-/* EYE ICON */
-
-.eye-icon {
-  font-size: 22px;
-
-  cursor: pointer;
 }
 
 /* INPUT */
@@ -281,21 +170,28 @@ body {
   border: none;
   outline: none;
 
-  font-size: 18px;
+  font-size: 16px;
 
   background: transparent;
 }
 
-/* ================= OPTIONS ================= */
+/* EYE ICON */
+
+.eye-icon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* OPTIONS */
 
 .login-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .remember-box {
@@ -306,56 +202,50 @@ body {
 }
 
 .login-options a {
-  color: #0b7a61;
+  color: #00a884;
   text-decoration: none;
 
-  font-weight: 600;
+  font-weight: 500;
 }
 
-/* ================= LOGIN BUTTON ================= */
+/* SIGN IN BUTTON */
 
 .login-btn {
   width: 100%;
-  height: 65px;
+  height: 56px;
 
   border: none;
-  border-radius: 16px;
+  border-radius: 10px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #25d366,
-      #0ea85c
-    );
+  background: #00a884;
 
   color: white;
 
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition: 0.2s;
 
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .login-btn:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 25px rgba(37,211,102,0.3);
+  background: #019574;
 }
 
-/* ================= DIVIDER ================= */
+/* DIVIDER */
 
 .divider {
   display: flex;
   align-items: center;
 
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 
-  color: gray;
+  color: #667781;
+
+  font-size: 14px;
 }
 
 .divider::before,
@@ -365,327 +255,47 @@ body {
   flex: 1;
   height: 1px;
 
-  background: #ddd;
+  background: #d1d7db;
 }
 
 .divider span {
-  padding: 0 15px;
+  padding: 0 14px;
 }
 
-/* ================= SIGNUP BUTTON ================= */
+/* SIGNUP BUTTON */
 
 .signup-btn {
   width: 100%;
-  height: 65px;
+  height: 56px;
 
-  border-radius: 16px;
+  border-radius: 10px;
 
-  border: 2px solid #dfe5e7;
+  border: 1px solid #d1d7db;
 
   background: white;
 
-  color: #0b7a61;
+  color: #111b21;
 
-  font-size: 22px;
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.signup-btn:hover {
-  background: #f5fff8;
-}
-
-/* ================= FOOTER ================= */
-
-.login-footer {
-  text-align: center;
-
-  margin-top: 35px;
-
-  color: gray;
-  font-size: 15px;
-}
-
-/* ================= CHAT APP ================= */
-
-.sidebar {
-  width: 30%;
-  height: 100vh;
-
-  background: #ffffff;
-
-  border-right: 1px solid #ddd;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-header {
-  padding: 18px;
-
-  background: #f0f2f5;
-
-  font-size: 22px;
-  font-weight: 700;
-
-  border-bottom: 1px solid #ddd;
-}
-
-.user-item {
-  display: flex;
-  align-items: center;
-
-  padding: 15px;
+  font-size: 17px;
+  font-weight: 600;
 
   cursor: pointer;
 
   transition: 0.2s;
-
-  border-bottom: 1px solid #f0f0f0;
 }
 
-.user-item:hover {
+.signup-btn:hover {
   background: #f5f6f6;
 }
 
-/* AVATAR */
+/* FOOTER */
 
-.avatar {
-  width: 45px;
-  height: 45px;
+.login-footer {
+  text-align: center;
 
-  border-radius: 50%;
-
-  background: #25d366;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: white;
-
-  font-weight: bold;
-
-  margin-right: 12px;
-}
-
-/* CHAT */
-
-.chat-container {
-  width: 70%;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-
-  background: #efeae2;
-}
-
-/* CHAT HEADER */
-
-.chat-header {
-  background: #f0f2f5;
-
-  padding: 15px 20px;
-
-  font-size: 18px;
-  font-weight: 600;
-
-  border-bottom: 1px solid #ddd;
-}
-
-/* MESSAGES */
-
-.chat-messages {
-  flex: 1;
-
-  overflow-y: auto;
-
-  padding: 20px;
-
-  background:
-    url("https://www.transparenttextures.com/patterns/cubes.png"),
-    #efeae2;
-}
-
-/* MESSAGE */
-
-.message {
-  background: white;
-
-  padding: 12px;
-
-  border-radius: 12px;
-
-  margin-bottom: 12px;
-
-  max-width: 60%;
-
-  width: fit-content;
-
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.08);
-}
-
-.message.own {
-  background: #dcf8c6;
-
-  margin-left: auto;
-}
-
-.msg-text {
-  word-wrap: break-word;
-}
-
-/* META */
-
-.msg-meta {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  gap: 5px;
-
-  margin-top: 5px;
-
-  font-size: 11px;
+  margin-top: 30px;
 
   color: #667781;
-}
 
-.tick.seen {
-  color: #34b7f1;
-}
-
-/* IMAGE */
-
-.chat-img {
-  max-width: 220px;
-
-  border-radius: 10px;
-
-  margin-top: 8px;
-}
-
-/* IMAGE PREVIEW */
-
-.image-preview {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 10px 15px;
-
-  background: #f0f2f5;
-
-  border-top: 1px solid #ddd;
-}
-
-.image-preview img {
-  width: 80px;
-  height: 80px;
-
-  object-fit: cover;
-
-  border-radius: 10px;
-}
-
-.image-preview button {
-  background: red;
-  color: white;
-
-  border: none;
-
-  padding: 8px 12px;
-
-  border-radius: 8px;
-
-  cursor: pointer;
-}
-
-/* INPUT AREA */
-
-.chat-input {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 12px 15px;
-
-  background: #f0f2f5;
-
-  border-top: 1px solid #ddd;
-}
-
-.chat-input input[type="text"] {
-  flex: 1;
-
-  padding: 14px 18px;
-
-  border-radius: 30px;
-
-  border: none;
-
-  outline: none;
-
-  font-size: 15px;
-}
-
-.chat-input input[type="file"] {
-  background: white;
-
-  padding: 10px;
-
-  border-radius: 12px;
-}
-
-.chat-input button {
-  width: 50px;
-  height: 50px;
-
-  border-radius: 50%;
-
-  border: none;
-
-  background: #25d366;
-
-  color: white;
-
-  font-size: 20px;
-
-  cursor: pointer;
-}
-
-/* SCROLLBAR */
-
-.chat-messages::-webkit-scrollbar {
-  width: 6px;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-
-  border-radius: 10px;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 1000px) {
-
-  .login-left {
-    display: none;
-  }
-
-  .login-right {
-    width: 100%;
-  }
-
-  .login-box {
-    max-width: 600px;
-  }
+  font-size: 13px;
 }

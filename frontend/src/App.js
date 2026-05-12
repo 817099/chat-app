@@ -41,8 +41,11 @@ function App() {
       );
 
       return res.data.url;
+
     } catch (err) {
+
       console.log("Upload error:", err);
+
       return null;
     }
   };
@@ -50,6 +53,7 @@ function App() {
   // LOGIN
   const login = async () => {
     try {
+
       const res = await axios.post(
         `${API_URL}/api/auth/login`,
         {
@@ -73,13 +77,17 @@ function App() {
       setLoggedIn(true);
 
     } catch {
+
       alert("Login failed");
+
     }
   };
 
   // SIGNUP
   const signup = async () => {
+
     try {
+
       await axios.post(
         `${API_URL}/api/auth/signup`,
         {
@@ -91,7 +99,9 @@ function App() {
       alert("Signup successful");
 
     } catch {
+
       alert("Signup failed");
+
     }
   };
 
@@ -99,7 +109,9 @@ function App() {
   const sendMessage = async () => {
 
     if (!receiver) {
+
       alert("Select a user");
+
       return;
     }
 
@@ -165,10 +177,12 @@ function App() {
     );
 
     return () => {
+
       socket.off("receive_message");
       socket.off("online_users");
       socket.off("typing");
       socket.off("seen_update");
+
     };
 
   }, [receiver, loadMessages]);
@@ -205,46 +219,21 @@ function App() {
         /* LOGIN PAGE */
         <div className="login-page">
 
-          {/* LEFT SIDE */}
-          <div className="login-left">
-
-            <div className="welcome-content">
-
-              <div className="logo-circle">
-                💬
-              </div>
-
-              <h1>
-                Welcome to <br />
-                <span>Chatify</span>
-              </h1>
-
-              <div className="green-line"></div>
-
-              <p>
-                Stay connected, share moments,
-                anytime, anywhere.
-              </p>
-
-            </div>
-
-          </div>
-
-          {/* RIGHT SIDE */}
+          {/* LOGIN CARD */}
           <div className="login-right">
 
             <div className="login-box">
 
-              {/* TOP ICON */}
+              {/* WHATSAPP ICON */}
               <div className="login-top-icon">
                 💬
               </div>
 
               {/* TITLE */}
-              <h2>Sign In</h2>
+              <h2>WhatsApp</h2>
 
               <p className="login-subtitle">
-                Welcome back! Please sign in to continue
+                Sign in to continue chatting
               </p>
 
               {/* USERNAME */}
@@ -260,7 +249,7 @@ function App() {
 
                 <input
                   type="text"
-                  placeholder="Enter your username"
+                  placeholder="Enter username"
                   onChange={(e) =>
                     setUsername(
                       e.target.value
@@ -285,17 +274,13 @@ function App() {
 
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Enter password"
                   onChange={(e) =>
                     setPassword(
                       e.target.value
                     )
                   }
                 />
-
-                <span className="eye-icon">
-                  👁️
-                </span>
 
               </div>
 
@@ -334,12 +319,12 @@ function App() {
                 className="signup-btn"
                 onClick={signup}
               >
-                ➕ Create New Account
+                Create New Account
               </button>
 
               {/* FOOTER */}
               <div className="login-footer">
-                © 2026 Chatify. All rights reserved.
+                © 2026 WhatsApp Clone
               </div>
 
             </div>
@@ -499,6 +484,7 @@ function App() {
             <div className="chat-input">
 
               <input
+                type="text"
                 placeholder="Type a message"
                 value={message}
                 onChange={(e) => {
