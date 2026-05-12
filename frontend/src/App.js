@@ -294,11 +294,6 @@ function App() {
                   Remember me
 
                 </label>
-
-                <a href="/">
-                  Forgot password?
-                </a>
-
               </div>
 
               {/* LOGIN BUTTON */}
