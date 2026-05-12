@@ -23,7 +23,7 @@ function App() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  // ✅ FIXED uploadImage function
+  // ✅ Upload image
   const uploadImage = async (file) => {
     try {
       const formData = new FormData();
@@ -35,13 +35,14 @@ function App() {
         },
       });
 
-      return res.data.url; // ✅ important
+      return res.data.url;
     } catch (err) {
       console.log("Upload error:", err);
       return null;
     }
   };
 
+  // ✅ Login
   const login = async () => {
     try {
       const res = await axios.post(`${API_URL}/api/auth/login`, {
@@ -50,27 +51,32 @@ function App() {
       });
 
       localStorage.setItem("token", res.data.token);
+
       setSender(res.data.username);
+
       socket.emit("register", res.data.username);
+
       setLoggedIn(true);
     } catch {
       alert("Login failed");
     }
   };
 
+  // ✅ Signup
   const signup = async () => {
     try {
       await axios.post(`${API_URL}/api/auth/signup`, {
         username,
         password,
       });
+
       alert("Signup successful");
     } catch {
       alert("Signup failed");
     }
   };
 
-  // 🔥 Send message (with image)
+  // ✅ Send Message
   const sendMessage = async () => {
     if (!receiver) {
       alert("Select a user");
@@ -95,6 +101,7 @@ function App() {
     setPreview(null);
   };
 
+  // ✅ Load Messages
   const loadMessages = useCallback(async () => {
     if (!sender || !receiver) return;
 
@@ -105,6 +112,7 @@ function App() {
     setChat(res.data);
   }, [sender, receiver]);
 
+  // ✅ Socket Events
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setChat((prev) => [...prev, data]);
@@ -115,6 +123,7 @@ function App() {
     socket.on("typing", (data) => {
       if (data.sender === receiver) {
         setTypingUser(data.sender);
+
         setTimeout(() => setTypingUser(""), 1000);
       }
     });
@@ -129,43 +138,96 @@ function App() {
     };
   }, [receiver, loadMessages]);
 
+  // ✅ Load old messages
   useEffect(() => {
-    if (loggedIn && receiver) loadMessages();
+    if (loggedIn && receiver) {
+      loadMessages();
+    }
   }, [receiver, loggedIn, loadMessages]);
 
+  // ✅ Seen status
   useEffect(() => {
-    if (receiver) socket.emit("seen", { sender, receiver });
+    if (receiver) {
+      socket.emit("seen", { sender, receiver });
+    }
   }, [chat, receiver, sender]);
 
   return (
     <div className="app">
       {!loggedIn ? (
+        // 🔥 MODERN LOGIN PAGE
         <div className="login-page">
-          <div className="login-box">
-            <h2>WhatsApp Clone 💬</h2>
 
-            <input
-              placeholder="Username"
-              onChange={(e) =>
-                setUsername(e.target.value.trim().toLowerCase())
-              }
-            />
+          {/* LEFT SIDE */}
+          <div className="login-left">
 
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="welcome-content">
 
-            <button onClick={login}>Login</button>
-            <button onClick={signup}>Signup</button>
+              <div className="logo-circle">
+                💬
+              </div>
+
+              <h1>Welcome Back!</h1>
+
+              <p>Connect instantly with your friends</p>
+
+            </div>
+
           </div>
+
+          {/* RIGHT SIDE */}
+          <div className="login-right">
+
+            <div className="login-box">
+
+              <h2>Sign In</h2>
+
+              <p>Login to continue chatting</p>
+
+              <input
+                placeholder="Username"
+                onChange={(e) =>
+                  setUsername(e.target.value.trim().toLowerCase())
+                }
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <div className="login-buttons">
+
+                <button
+                  className="login-btn"
+                  onClick={login}
+                >
+                  Sign In
+                </button>
+
+                <button
+                  className="signup-btn"
+                  onClick={signup}
+                >
+                  Create Account
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
       ) : (
         <>
           {/* SIDEBAR */}
           <div className="sidebar">
-            <div className="sidebar-header">Chats</div>
+
+            <div className="sidebar-header">
+              Chats
+            </div>
 
             {onlineUsers.map((user, i) => (
               <div
@@ -176,21 +238,31 @@ function App() {
                 <div className="avatar">
                   {user[0].toUpperCase()}
                 </div>
+
                 <span>{user}</span>
               </div>
             ))}
+
           </div>
 
           {/* CHAT AREA */}
           <div className="chat-container">
+
             <div className="chat-header">
               <strong>{receiver || "Select a user"}</strong>
-              {typingUser && <span> typing...</span>}
+
+              {typingUser && (
+                <span> typing...</span>
+              )}
             </div>
 
+            {/* MESSAGES */}
             <div className="chat-messages">
+
               {chat.map((msg, i) => {
-                const time = new Date(msg.createdAt).toLocaleTimeString([], {
+                const time = new Date(
+                  msg.createdAt
+                ).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
                 });
@@ -205,6 +277,7 @@ function App() {
                     }
                   >
                     <div className="msg-text">
+
                       {msg.message}
 
                       {msg.image && (
@@ -214,10 +287,14 @@ function App() {
                           className="chat-img"
                         />
                       )}
+
                     </div>
 
                     <div className="msg-meta">
-                      <span className="time">{time}</span>
+
+                      <span className="time">
+                        {time}
+                      </span>
 
                       {msg.sender === sender && (
                         <span
@@ -228,20 +305,29 @@ function App() {
                           }
                         >
                           {msg.status === "sent" && "✔"}
+
                           {msg.status === "delivered" && "✔✔"}
+
                           {msg.status === "seen" && "✔✔"}
                         </span>
                       )}
+
                     </div>
+
                   </div>
                 );
               })}
+
             </div>
 
-            {/* 🔥 IMAGE PREVIEW */}
+            {/* IMAGE PREVIEW */}
             {preview && (
               <div className="image-preview">
-                <img src={preview} alt="preview" />
+
+                <img
+                  src={preview}
+                  alt="preview"
+                />
 
                 <button
                   onClick={() => {
@@ -251,17 +337,23 @@ function App() {
                 >
                   ❌
                 </button>
+
               </div>
             )}
 
             {/* INPUT AREA */}
             <div className="chat-input">
+
               <input
                 placeholder="Type a message"
                 value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
-                  socket.emit("typing", { sender, receiver });
+
+                  socket.emit("typing", {
+                    sender,
+                    receiver,
+                  });
                 }}
               />
 
@@ -269,16 +361,23 @@ function App() {
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files[0];
+
                   setImage(file);
 
                   if (file) {
-                    setPreview(URL.createObjectURL(file));
+                    setPreview(
+                      URL.createObjectURL(file)
+                    );
                   }
                 }}
               />
 
-              <button onClick={sendMessage}>➤</button>
+              <button onClick={sendMessage}>
+                ➤
+              </button>
+
             </div>
+
           </div>
         </>
       )}
